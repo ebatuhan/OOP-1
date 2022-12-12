@@ -14,7 +14,7 @@ Point Triangle::getA()
 	return a_;
 }
 
-Triangle::Triangle(const Point& a_, const Point& b_, const Point& c_)
+Triangle::Triangle(const Point& a_,  const Point& b_,const Point& c_)
 {
 	this->a_ = a_;
 	this->b_ = b_;
@@ -63,7 +63,7 @@ double Triangle::getCB()
 {
 	return c_.getDistance(b_);
 }
-bool Triangle::isTriangle(Point& a_, Point& b_, Point& c_)
+bool Triangle::isTriangle()
 {
 	//if (((abs(getAB()) - abs(getAC()) < getCB()) && ((getCB() < getAB() + getAC())) && (abs(getAC()) - abs(getCB()) < getAB() < getAC() + getCB()) && (abs(getAB()) - abs(getCB()) < getAC() < getAB() + getCB()))
 	if ((abs(getAB()) - abs(getAC()) < getCB()) && (getCB() < getAB() + getAC()))

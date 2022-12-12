@@ -22,7 +22,7 @@ public:
 	double getAB();
 	double getAC();
 	double getCB();
-	bool isTriangle(Point& a_, Point& b_, Point& c_);
+	bool isTriangle();
 	double getPerimeter();
 	bool isEqual(const Triangle& other);
 	void move(double K);
