@@ -16,7 +16,6 @@ public:
 	void setA(const Point& a_);
 	void setB(const Point& b_);
 	void setC(const Point& c_);
-	
 	Point getB();
 	Point getC();
 	double getAB();

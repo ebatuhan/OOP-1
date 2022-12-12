@@ -14,8 +14,8 @@ Point::Point(double x_, double y_)
 }
 Point::Point(const Point& other)
 {
-	x_ = other.x_;
-	y_ = other.y_;
+	this->x_ = other.x_;
+	this->y_ = other.y_;
 }
 void Point::setX(double x_)
 {

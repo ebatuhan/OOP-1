@@ -12,10 +12,28 @@ void input(Point& point);
 
 int main()
 {
-    Point f(1, 2);
-    Triangle t1;
-    Triangle t2(Point(1.0, 2.0), Point(1.0, 2.0), Point(1.0, 2.0));
+    Point *p1 = new Point;
+    Point *p2 = new Point;
+    Point *p3 = new Point;
+    p1->setX(0);
+    p2->setX(0);
+    p3->setX(0);
+    p1->setY(5);
+    p2->setY(0);
+    p3->setY(0);
+    Triangle* t1 = new Triangle;
+    t1->setA(*p1);
+    t1->setB(*p2);
+    t1->setC(*p3);
 
+    cout << t1->getAB();
+
+    delete t1;
+    delete p1, p2, p3;
+
+    
+
+    
 
     /*  Point point1;
       Point p1(999, 999);
