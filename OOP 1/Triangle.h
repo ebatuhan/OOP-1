@@ -1,29 +1,44 @@
 #pragma once
 #include "Point.h"
+#include <iostream>
+#include <iosfwd>
 
 class Triangle 
 {
 private:
-	Point a_, b_, c_;
-
+	Point* a_;
+	Point* b_;
+	Point* c_;
 public:
+	//Constructors
 	Triangle();
-	Point getA();
-	
-	Triangle(const Point& a_,const Point& b_,const Point& c_);
-	Triangle(const Triangle& other);
-	~Triangle() = default;
-	void setA(const Point& a_);
-	void setB(const Point& b_);
-	void setC(const Point& c_);
-	Point getB();
-	Point getC();
-	double getAB();
-	double getAC();
-	double getCB();
-	bool isTriangle();
-	double getPerimeter();
-	bool isEqual(const Triangle& other);
-	void move(double K);
-	
+	Triangle(const Point& a, const Point& b, const Point& c);
+	Triangle(const Triangle& other_);
+
+	//Set and Get
+	void setA(const Point& a);
+	void setB(const Point& b);
+	void setC(const Point& c);
+
+	Point getA() const;
+	Point getB() const;
+	Point getC() const;
+
+
+	//Methods
+
+	bool isTriangle() const;
+	void move(double k) const;
+	double getPerimeter() const;
+	bool isEqual(const Triangle& other_) const;
+	double getArea() const;
+
+
+	//Operator Overloading
+	friend istream& operator>>(istream& is, const Triangle& other_);
+	friend ostream& operator<<(ostream& os, const Triangle& other_);
+
+	//Destructor
+
+	~Triangle();
 };

@@ -1,52 +1,82 @@
+
 #include "Point.h"
+#include <cmath>
 #include <iostream>
 using namespace std;
 
-Point::Point()
-{
+//Constructors
+Point::Point() {
 	x_ = 0;
 	y_ = 0;
 }
-Point::Point(double x_, double y_)
+Point::Point(double x,double y)
 {
-	this->x_ = x_;
-	this->y_ = y_;
+	this->x_ = x;
+	this->y_ = y;
 }
-Point::Point(const Point& other)
+Point::Point(const Point& other_)
 {
-	this->x_ = other.x_;
-	this->y_ = other.y_;
+		this->x_ = other_.x_;
+		this->y_ = other_.y_;
 }
-void Point::setX(double x_)
+//Get and Set
+void Point::setX(double x)
 {
-	this->x_ = x_;
+this->x_ = x;
 }
-void Point::setY(double y_)
+void Point::setY(double y) 
 {
-	this->y_ = y_;
+this->y_ = y;
 }
 double Point::getX() const
 {
-	return x_;
+	return this->x_;
 }
 double Point::getY() const
 {
-	return y_;
+	return this->y_;
 }
-bool Point::isEqual(const Point& other)
+//Destructor
+Point::~Point()
 {
-	if (x_ == other.x_ && y_ == other.y_)
-	{
-		return true;
-	}
-	return false;
+
+}
+
+//Methods
+bool Point::isEqual(const Point other_) const
+{
+	return this->x_ == other_.x_;
+	return this->y_ == other_.y_;
+}
+double Point::getDistance(const Point other_) const
+{
+	return sqrt(pow((this->x_ - other_.x_), 2) + pow((this->y_ - other_.y_), 2));
 }
 void Point::move(double k)
 {
-	x_ += k;
-	y_ += k;
+	this->x_ += k;
+	this->y_ += k;
 }
-double Point::getDistance(const Point& other)
+
+
+//Operator Overloading
+ostream& operator<<(ostream& os, Point& other_)
 {
-	return sqrt(pow((x_ - other.x_), 2) + pow((y_ - other.y_), 2));
+	os << "(" << other_.getX() << "," << other_.getY() << ")";
+	return os;
+}
+istream& operator>>(istream& is, Point& other_)
+{
+	double x = 0;
+	double y = 0;
+
+	cout << "X: ";
+	is >> x;
+	cout << "Y: ";
+	is >> y;
+	
+	other_.setX(x);
+	other_.setY(y);
+
+	return is;
 }

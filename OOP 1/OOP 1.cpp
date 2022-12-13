@@ -1,112 +1,245 @@
 #include "Triangle.h"
 #include "Point.h"
 #include <iostream>
+#include <limits>
 
+const Point origin(0, 0);
+const Point posCircle(origin);
+
+void moveTriangle();
+void getPerimeter();
+void canMakeSquare();
+void makeTriangle();
+void funcPoints();
+void clear();
+void funcCircle();
+void movePoint();
+bool isPointInCircle(double radius, const Point& p);
+bool isEqualSquare(Triangle& t, Triangle& t_);
 
 using namespace std;
-double radius;
-Point const origin(0.0, 0.0);
-bool isPointInCircle(const Point& point, double rad);
-void input(Point& point);
 
 
 int main()
 {
-    Point *p1 = new Point;
-    Point *p2 = new Point;
-    Point *p3 = new Point;
-    p1->setX(0);
-    p2->setX(0);
-    p3->setX(0);
-    p1->setY(5);
-    p2->setY(0);
-    p3->setY(0);
-    Triangle* t1 = new Triangle;
-    t1->setA(*p1);
-    t1->setB(*p2);
-    t1->setC(*p3);
+	cout << "Menu" << endl << "Select a option: " << endl;
+	cout << "1) Set more than 1 point and see the closest one to the origin. " << endl;
+	cout << "2) Set a point, and the radius of the circle, to see that point inside of the circle or not. " << endl;
+	cout << "3) Set a point and move it. " << endl;
+	cout << "4) Set a triangle. " << endl;
+	cout << "5) Set 2 triangles and check if they can make a square. " << endl;
+	cout << "6) Set a triangle and get perimeter of it. " << endl;
+	cout << "7) Set a triangle and move it. " << endl;
 
-    cout << t1->getAB();
+	int MENU;
 
-    delete t1;
-    delete p1, p2, p3;
+	cin >> MENU;
+	if (!cin)
+		cout << "Enter a Number!";
 
-    
+	if (MENU < 1 || MENU > 7)
+	{
+		cout << "No such a option";
+	}
 
-    
-
-    /*  Point point1;
-      Point p1(999, 999);
-      Point p2;
-      while (true)
-      {
-          cout << "Entering a point." << endl;
-          input(p2);
-
-          if(p2.getX() == 0.0 && p2.getY() == 0.0)
-          {
-              cout << "Cooridnates of te closest point to the origin: (" << p1.getX() << ", " << p1.getY() << ")" << endl;
-              break;
-          }
-          if (p2.getDistance(origin) < p1.getDistance(origin))
-          {
-
-              p1.setX(p2.getX());
-              p1.setY(p2.getY());
-          }
+	if (MENU == 1)
+		funcPoints();
+	if (MENU == 2)
+		funcCircle();
+	if (MENU == 3)
+		movePoint();
+	if (MENU == 4)
+		makeTriangle();
+	if (MENU == 5)
+		canMakeSquare();
+	if (MENU == 6)
+		getPerimeter();
+	if (MENU == 7)
+		moveTriangle();
 
 
-      }
-      cout << "Enter a radius of the circle and a point to see if that point inside of the circle." << endl;
-      cout << "Enter the radius of the circle: ";
-      cin >> radius;
-      if (!cin)
-      {
-          cout << "This can be only number!";
-          exit(-1);
-      }
 
-      input(point1);
-
-
-      if (isPointInCircle(point1, radius))
-      {
-          cout << "Point is in the circle";
-      }
-     /*else cout << "Point is not in the circle";*/
 }
-
-bool isPointInCircle(const Point& point, double rad)
+bool isEqualSquare(Triangle& t, Triangle& t_)
 {
-    if ((point.getX() <= radius) && (point.getY() <= radius))
-    {
-        return true;
-    }
-    else return false;
+	if (t.getArea() == t_.getArea())
+	{
+		return true;
+	}
 
+	else
+		return false;
 }
-void input(Point& point)
+bool isPointInCircle(double radius, Point& p)
 {
-    double inputX;
-    double inputY;
-    cout << "Enter Point X: " << endl;
-    cin >> inputX;
-    if (!cin)
-    {
-        cout << "This can be only numbers!";
-        exit(-1);
-    }
-    cout << "Enter Point Y: " << endl;
-    cin >> inputY;
-    if (!cin)
-    {
-        cout << "This can be only numbers!";
-        exit(-1);
-    }
+	return (radius >= p.getDistance(posCircle));
+}
+void funcPoints()
+{
+	Point min(-32767, -32767);
+	Point currentP;
+	while (true)
+	{
+		cout << "Enter a Point (Enter the coordinates '0,0' to finish): ";
+		cin >> currentP;
+		if (!cin)
+		{
+			cout << "Coordinates must be a real number";
+			exit(-1);
+		}
+		if (currentP.getDistance(origin) < min.getDistance(origin) && currentP.getX() != 0 && currentP.getY() != 0)
+		{
+			min.setX(currentP.getX());
+			min.setY(currentP.getY());
+		}
+		if (currentP.getX() == 0 && currentP.getY() == 0)
+		{
+			cout << "Closest point to origin: " << min << endl;
+			break;
+		}
 
-    point.setX(inputX);
-    point.setY(inputY);
+	}
+}
+void funcCircle()
+{
+	Point a;
+	double radius;
+	cout << "Enter A point: ";
+	cin >> a;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+	cout << endl << "Enter the radius of the circle: ";
+	cin >> radius;
+	if (!cin)
+	{
+		cout << "Radius must be a real number";
+		exit(-1);
+	}
+	if (!isPointInCircle(radius, a))
+	{
+		cout << "Entered point is not in the circle with the radius " << radius << " unit.";
+	}
+	else
+	{
+		cout << "Entered point is in the circle with the radius " << radius << " unit.";
+	}
 
 }
+void movePoint()
+{
+	Point p;
+	double k;
+	cout << "Enter a Point" << endl;
+	cin >> p;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+	cout << "Enter how many units you want to move this point: " << endl;
+	cin >> k;
+	p.move(k);
+	cout << "Point is moved by " << k << " units.New position of the point : ";
+	cout << p;
+}
+void clear() {
+	std::cout << "\x1B[2J\x1B[H";
+}
+void makeTriangle()
+{
+	Triangle* t = new Triangle;
+	cin >> *t;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+	cout << *t;
+	delete t;
+}
+void canMakeSquare()
+{
+	Triangle *t1 = new Triangle;
+	Triangle* t2 = new Triangle;
+	cout << "Enter the first triangle: " << endl;
+	cin >> *t1;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+	
+		cout << "Enter the second triangle : " << endl;
+		cin >> *t2;
 
+		if (!cin)
+		{
+			cout << "Coordinates must be a real number";
+			exit(-1);
+		}
+		cout << endl;
+	
+		if (t1->isTriangle())
+		{
+			if (t2->isTriangle())
+			{
+				if (isEqualSquare(*t1, *t2))
+					cout << "They can make square. ";
+				else
+					cout << "They can`t make square. ";
+			}
+		}
 
+	
+
+	delete t1;
+	delete t2;
+}
+void getPerimeter()
+{
+	Triangle* t = new Triangle;
+	cout << "Enter the triangle: " << endl;
+	cin >> *t;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+	if (t->isTriangle())
+	{
+		cout << t->getPerimeter();
+	}
+	delete t;
+}
+void moveTriangle()
+{
+	Triangle *t = new Triangle;
+	double k;
+	cout << "Enter the triangle: " << endl;
+	cin >> *t;
+	if (!cin)
+	{
+		cout << "Coordinates must be a real number";
+		exit(-1);
+	}
+
+	if (t->isTriangle()){
+	cout << endl << "Enter how many units you want to move the triangle: ";
+	
+	
+		cin >> k;
+		if (!cin)
+		{
+			cout << "Please enter a number";
+			exit(-1);
+		}
+
+		t->move(k);
+		cout << endl << "The triangle moved by " << k << " units, new poisiton of the triangle: " << *t;
+	}
+	delete t;
+
+}
